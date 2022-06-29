@@ -31,7 +31,7 @@ func assertError(t testing.TB, got, want error) {
 	t.Helper()
 
 	if got != want {
-		t.Errorf("got error %q want %q", got, want)
+		t.Errorf("got %q want %q", got, want)
 	}
 }
 
@@ -40,6 +40,7 @@ func TestAdd(t *testing.T) {
 		dictionary := Dictionary{}
 		word := "test"
 		definition := "this is just a test"
+
 		err := dictionary.Add(word, definition)
 
 		assertError(t, err, nil)
@@ -52,7 +53,7 @@ func TestAdd(t *testing.T) {
 		dictionary := Dictionary{word: definition}
 		err := dictionary.Add(word, "new test")
 
-		assertError(t, err, nil)
+		assertError(t, err, ErrWordExists)
 		assertDefinition(t, dictionary, word, definition)
 	})
 }
